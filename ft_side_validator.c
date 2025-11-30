@@ -1,5 +1,3 @@
-#include "ft_side_checker.h"
-#include "ft_side_validator.h"
 
 int	col_valid(int row, int col, int grid[4][4], int pows[16])
 {

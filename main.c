@@ -10,12 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "ft_side_checker.h"
-#include "ft_base_validator.h"
-#include "ft_side_validator.h"
-#include "ft_grid_printer.h"
-/*
+#include <stdlib.h>
+
 int	is_valid(int row, int col, int grid[4][4], int k, int pows[16])
 {
 	int	i;
@@ -63,7 +59,7 @@ int	is_valid(int row, int col, int grid[4][4], int k, int pows[16])
 	}
 	return (1);
 }
-*/
+
 int	solve(int row, int col, int grid[4][4], int pows[16])
 {
 	int	i;
@@ -77,7 +73,7 @@ int	solve(int row, int col, int grid[4][4], int pows[16])
 	i = 1;
 	while (i <= 4)
 	{
-		if (ft_base_valid(row, col, grid, i) == 1 && sides_valid(row, col, grid, pows) == 1)
+		if (is_valid(row, col, grid, i, pows	))
 		{
 			grid[row][col] = i;
 			if (solve(row, col + 1, grid, pows) == 1)
@@ -89,14 +85,49 @@ int	solve(int row, int col, int grid[4][4], int pows[16])
 	return (0);
 }
 
+int *ft_parse_input(char *input)
+{
+    int *povs;
+    int i;
+
+    povs = malloc(16 * 4);
+    if (!povs)
+        return ;
+
+    i = 0;
+    while (*input != '\0')
+    {
+        if (*input >= '0' && *input <= '9')
+        {
+            if (i >= 16)
+            {
+                return ;
+            }
+            povs[i] = *input - '0';
+            i++;
+        }
+        input++;
+    }
+
+    if (i != 16)
+    {
+        return ;
+    }
+
+    return (povs);
+}
+
 int	main(int argc, char **argv)
 {
 	int	grid[4][4] = {{0, 0, 0, 0},
 	{0, 0, 0, 0},
 	{0, 0, 0, 0},
 	{0, 0, 0, 0}};
-	int	pows[16] = {4, 3, 2, 1, 1, 2, 2, 2, 4, 3, 2, 1, 1, 2, 2, 2};
+	int	*pows;
 
+	if(argc != 2)
+		return;
+	pows = ft_parse_input(argv[1]);
 	solve(0, 0, grid, pows);
 	ft_print(grid);
 	return (0);

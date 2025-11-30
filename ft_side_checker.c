@@ -1,4 +1,3 @@
-#include "ft_side_checker.h"
 
 int	is_visible(int arr[4], int pow)
 {

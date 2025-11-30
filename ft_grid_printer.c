@@ -1,5 +1,4 @@
 #include <unistd.h>
-#include "ft_grid_printer.h"
 
 void	ft_putchar(char c)
 {
